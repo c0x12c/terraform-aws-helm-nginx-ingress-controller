@@ -52,86 +52,48 @@ resource "helm_release" "this" {
   timeout          = 600
   values           = [local.manifest]
 
-
-  dynamic "set" {
-    for_each = var.node_selector
-    content {
-      name  = "controller.nodeSelector.${set.key}"
-      value = set.value
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.tolerations[${set.key}].key"
-      value = lookup(set.value, "key", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.tolerations[${set.key}].operator"
-      value = lookup(set.value, "operator", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.tolerations[${set.key}].value"
-      value = lookup(set.value, "value", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.tolerations[${set.key}].effect"
-      value = lookup(set.value, "effect", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.node_selector
-    content {
-      name  = "controller.admissionWebhooks.patch.nodeSelector.${set.key}"
-      value = set.value
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.admissionWebhooks.patch.tolerations[${set.key}].key"
-      value = lookup(set.value, "key", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.admissionWebhooks.patch.tolerations[${set.key}].operator"
-      value = lookup(set.value, "operator", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.admissionWebhooks.patch.tolerations[${set.key}].value"
-      value = lookup(set.value, "value", "")
-    }
-  }
-
-  dynamic "set" {
-    for_each = var.tolerations
-    content {
-      name  = "controller.admissionWebhooks.patch.tolerations[${set.key}].effect"
-      value = lookup(set.value, "effect", "")
-    }
-  }
+  set = flatten([
+    [for key, value in var.node_selector : {
+      name  = "controller.nodeSelector.${key}"
+      value = value
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.tolerations[${key}].key"
+      value = lookup(value, "key", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.tolerations[${key}].operator"
+      value = lookup(value, "operator", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.tolerations[${key}].value"
+      value = lookup(value, "value", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.tolerations[${key}].effect"
+      value = lookup(value, "effect", "")
+    }],
+    [for key, value in var.node_selector : {
+      name  = "controller.admissionWebhooks.patch.nodeSelector.${key}"
+      value = value
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.admissionWebhooks.patch.tolerations[${key}].key"
+      value = lookup(value, "key", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.admissionWebhooks.patch.tolerations[${key}].operator"
+      value = lookup(value, "operator", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.admissionWebhooks.patch.tolerations[${key}].value"
+      value = lookup(value, "value", "")
+    }],
+    [for key, value in var.tolerations : {
+      name  = "controller.admissionWebhooks.patch.tolerations[${key}].effect"
+      value = lookup(value, "effect", "")
+    }],
+  ])
 
   lifecycle {
     ignore_changes = [
