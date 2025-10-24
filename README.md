@@ -32,14 +32,14 @@ module "eks_helm_nginx_ingress_controller" {
 | Name                                                                         | Version   |
 |------------------------------------------------------------------------------|-----------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform)    | >= 1.9.8  |
-| <a name="requirement_helm"></a> [helm](#requirement\_helm)                   | >=2.16.1  |
+| <a name="requirement_helm"></a> [helm](#requirement\_helm)                   | ~> 3.0    |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.33.0 |
 
 ## Providers
 
 | Name                                                                   | Version   |
 |------------------------------------------------------------------------|-----------|
-| <a name="provider_helm"></a> [helm](#provider\_helm)                   | >=2.16.1  |
+| <a name="provider_helm"></a> [helm](#provider\_helm)                   | ~> 3.0    |
 | <a name="provider_kubernetes"></a> [kubernetes](#provider\_kubernetes) | >= 2.33.0 |
 
 ## Modules
@@ -61,8 +61,8 @@ No modules.
 | <a name="input_enabled_admission_webhooks"></a> [enabled\_admission\_webhooks](#input\_enabled\_admission\_webhooks) | Enable admission webhooks                                                                                                                            | `bool`              | `false`           |    no    |
 | <a name="input_helm_chart_version"></a> [helm\_chart\_version](#input\_helm\_chart\_version)                         | The chart version of ingress controller                                                                                                              | `string`            | `"4.12.1"`        |    no    |
 | <a name="input_helm_release_name"></a> [helm\_release\_name](#input\_helm\_release\_name)                            | The Helm release of the services.                                                                                                                    | `string`            | `"ingress-nginx"` |    no    |
-| <a name="input_max_replicas"></a> [max_replicas](#input\_max_replicas)                                               | Max number of pods.                                                                                                                                  | `number`            | `3`               |    no    |
-| <a name="input_min_replicas"></a> [min_replicas](#input\_min_rplicas)                                                | Min numer of pods.                                                                                                                                   | `number`            | `1`               |    no    |
+| <a name="input_max_replicas"></a> [max\_replicas](#input\_max\_replicas)                                             | Max number of pods.                                                                                                                                  | `number`            | `3`               |    no    |
+| <a name="input_min_replicas"></a> [min\_replicas](#input\_min\_replicas)                                             | Min numer of pods.                                                                                                                                   | `number`            | `1`               |    no    |
 | <a name="input_namespace"></a> [namespace](#input\_namespace)                                                        | The Namespace of the services.                                                                                                                       | `string`            | `"kube-system"`   |    no    |
 | <a name="input_network_cidr"></a> [network\_cidr](#input\_network\_cidr)                                             | Internal network CIDR for forwarding real IPs through Nginx                                                                                          | `string`            | n/a               |   yes    |
 | <a name="input_nginx_cpu"></a> [nginx\_cpu](#input\_nginx\_cpu)                                                      | The nginx cpu                                                                                                                                        | `string`            | `"100m"`          |    no    |
